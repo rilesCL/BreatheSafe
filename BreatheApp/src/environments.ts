@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    stockApiKey: 'your-stock-api-key-here'
+    stockApiKey: 'd8e0d845fcb7b0b91844ffd5a5addba3'
 };

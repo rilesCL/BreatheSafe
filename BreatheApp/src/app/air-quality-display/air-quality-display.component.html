@@ -1,3 +1,10 @@
-<div class="air-quality-display">
-    <h2></h2>
-</div>
+<h2>Test du GeoService</h2>
+@if(coordinates){
+  <p>Latitude: {{ coordinates.lat }}, Longitude: {{ coordinates.lon }}</p>
+}
+@else {
+    <p>Chargement des coordonnées...</p>
+}
+    
+<!-- <p [@if]="coordinates">Latitude: {{ coordinates.lat }}, Longitude: {{ coordinates.lon }}</p> -->
+<!-- <p @if="!coordinates">Chargement des coordonnées...</p> -->
