@@ -38,6 +38,9 @@ importers:
       '@angular/ssr':
         specifier: ^18.2.1
         version: 18.2.14(@angular/common@18.2.13(@angular/core@18.2.13(rxjs@7.8.2)(zone.js@0.14.10))(rxjs@7.8.2))(@angular/core@18.2.13(rxjs@7.8.2)(zone.js@0.14.10))
+      '@popperjs/core':
+        specifier: ^2.11.8
+        version: 2.11.8
       bootstrap:
         specifier: ^5.3.3
         version: 5.3.3(@popperjs/core@2.11.8)
