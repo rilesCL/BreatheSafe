@@ -1,3 +1,15 @@
-<div>
-  <app-air-quality-display></app-air-quality-display>
+<div class="container">
+  <header>
+    <h1>Air Quality Monitor</h1>
+    <p class="subtitle">Real-time air quality data for your location</p>
+    <!-- <app-location-search (searchLocation)="onLocationSearch($event)"></app-location-search> -->
+  </header>
+  
+  <main>
+    <app-air-quality-display></app-air-quality-display>
+  </main>
+
+  <footer>
+    <p>Data provided by Air Quality API • Updated in real-time</p>
+  </footer>
 </div>
