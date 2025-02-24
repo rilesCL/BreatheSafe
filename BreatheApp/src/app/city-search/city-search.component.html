@@ -1,0 +1,20 @@
+<div>
+  <input
+    type="text"
+    [(ngModel)]="query"
+    (input)="search(query)"
+    placeholder="Enter a city name"
+  />
+  
+    @if (cities && cities.length > 0) {
+      <ul>
+        @for (city of cities; track (city.name + city.lat + city.lon)) {
+            <li>
+              <a href="#" (click)="selectCity(city); $event.preventDefault()">
+                {{ city.name }}, {{ city.country }} (Lat: {{ city.lat }}, Lon: {{ city.lon }})
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </div>

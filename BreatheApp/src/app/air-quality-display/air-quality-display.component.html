@@ -5,6 +5,14 @@
 @else {
     <p>Chargement des coordonnées...</p>
 }
+
+@if(weather){
+  <h2>Météo à {{ city }}</h2>
+  <p>Température : {{ weather.main.temp }}°C</p>
+  <p>Humidité : {{ weather.main.humidity }}%</p>
+  <p>Condition : {{ weather.weather[0].description }}</p>
+}
+
     
 <!-- <p [@if]="coordinates">Latitude: {{ coordinates.lat }}, Longitude: {{ coordinates.lon }}</p> -->
 <!-- <p @if="!coordinates">Chargement des coordonnées...</p> -->
