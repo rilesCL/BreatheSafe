@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Observable, Subject, switchMap } from 'rxjs';
 import { CitysearchService } from '../../service/citysearch.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-city-search',
@@ -18,7 +19,8 @@ export class CitySearchComponent {
     private searchTerms = new Subject<string>();
   
   constructor(
-    private citySearchService: CitysearchService
+    private citySearchService: CitysearchService,
+    private router : Router
   ) {}
 
   search(term: string): void {
@@ -41,6 +43,7 @@ export class CitySearchComponent {
   }
 
   selectCity(city: any): void {
+    this.router.navigate(['/city', city.name], { queryParams: { lat: city.lat, lon: city.lon } });
     console.log('Ville sélectionnée :', city);
   }
   
