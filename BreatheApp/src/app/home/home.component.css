@@ -1,0 +1,18 @@
+.container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  h1 {
+    color: #1e4d92;
+    margin-bottom: 1rem;
+  }
+
+  
+  h5 {
+    margin-bottom: 1rem;
+    justify-content: center;
+    text-align: center;
+  }
