@@ -1,0 +1,56 @@
+/* src/app/air-quality-display/air-quality-display.component.css */
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .detail-label {
+    color: #666;
+  }
+  
+  .detail-value {
+    font-weight: 500;
+  }
+  
+  .aqi-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .bg-success {
+    background-color: #28a745;
+  }
+  
+  .bg-info {
+    background-color: #17a2b8;
+  }
+  
+  .bg-warning {
+    background-color: #ffc107;
+    color: #212529;
+  }
+  
+  .bg-danger {
+    background-color: #dc3545;
+  }
+  
+  .bg-secondary {
+    background-color: #6c757d;
+  }
+  
+  h1 {
+    color: #1e4d92;
+  }
+  
+  .card-header {
+    background: linear-gradient(135deg, #1e4d92 0%, #1e92d1 100%) !important;
+  }

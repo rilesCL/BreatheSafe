@@ -1,0 +1,13 @@
+.search-container {
+  margin-bottom: 1rem;
+}
+
+.city-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.city-link:hover {
+  color: #1e92d1;
+}

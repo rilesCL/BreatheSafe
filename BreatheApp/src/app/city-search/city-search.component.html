@@ -1,20 +1,40 @@
-<div>
-  <input
-    type="text"
-    [(ngModel)]="query"
-    (input)="search(query)"
-    placeholder="Enter a city name"
-  />
+<!-- src/app/city-search/city-search.component.html -->
+<div class="search-container">
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="query"
+      (input)="search(query)"
+      placeholder="Entrez le nom d'une ville..."
+    />
+    <button class="btn btn-primary" type="button" [disabled]="!query">
+      <i class="bi bi-search"></i> Rechercher
+    </button>
+  </div>
   
-    @if (cities && cities.length > 0) {
-      <ul>
-        @for (city of cities; track (city.name + city.lat + city.lon)) {
-            <li>
-              <a href="#" (click)="selectCity(city); $event.preventDefault()">
-                {{ city.name }}, {{ city.country }} (Lat: {{ city.lat }}, Lon: {{ city.lon }})
-              </a>
-            </li>
-          }
-        </ul>
-      }
+  @if (isLoading) {
+    <div class="d-flex justify-content-center my-3">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
     </div>
+  }
+  
+  @if (cities && cities.length > 0) {
+    <ul class="list-group mt-3">
+      @for (city of cities; track (city.name + city.lat + city.lon)) {
+        <li class="list-group-item list-group-item-action">
+          <a href="#" (click)="selectCity(city); $event.preventDefault()" class="city-link">
+            <strong>{{ city.name }}</strong>, {{ city.country }}
+            <small class="text-muted">(Lat: {{ city.lat.toFixed(2) }}, Lon: {{ city.lon.toFixed(2) }})</small>
+          </a>
+        </li>
+      }
+    </ul>
+  } @else if (query && !isLoading) {
+    <div class="alert alert-info mt-3">
+      Aucune ville trouvée pour "{{ query }}"
+    </div>
+  }
+</div>

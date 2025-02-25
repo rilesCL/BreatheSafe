@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CitySearchComponent } from '../city-search/city-search.component';
+import { AirQualityDisplayComponent } from '../air-quality-display/air-quality-display.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     RouterOutlet,
-    CitySearchComponent
+    CitySearchComponent,
+    AirQualityDisplayComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { NgClass } from '@angular/common';
 import { WeatherService } from '../../service/weather.service';
 import { FormsModule } from '@angular/forms';
+import { catchError, forkJoin, of } from 'rxjs';
+import { AirQualityService } from '../../service/air-quality.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -20,40 +23,97 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './air-quality-display.component.css'
 })
 export class AirQualityDisplayComponent {
-city = 'Montréal';
-country = 'CA';
-coordinates: any;
-weather: any;
+  city: string = '';
+  country: string = '';
+  lat: number = 0;
+  lon: number = 0;
+  weather: any;
+  airQuality: any;
+  isLoading: boolean = true;
+  error: string = '';
+  
+  // Tableau pour interpréter l'indice de qualité de l'air
+  aqiLabels = [
+    { value: 1, label: 'Excellente', color: 'success' },
+    { value: 2, label: 'Bonne', color: 'info' },
+    { value: 3, label: 'Modérée', color: 'warning' },
+    { value: 4, label: 'Mauvaise', color: 'danger' },
+    { value: 5, label: 'Très mauvaise', color: 'danger' }
+  ];
 
-constructor(
-  private geolocalisationService: GeolocalisationService,
-  private weatherService: WeatherService
-) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private weatherService: WeatherService,
+    private airQualityService: AirQualityService
+  ) {}
 
-ngOnInit() {
-  this.geolocalisationService.getCoordinates(this.city, this.country).subscribe(
-    (data: any) => {
-      if (data.length > 0) {
-        this.coordinates = data[0]; // Contient latitude et longitude
-        console.log('Coordonnées récupérées :', this.coordinates);
-
-        //Appel à l'API météo apres recuperation des coordonnées
-        this.weatherService.getWeather(this.coordinates.lat, this.coordinates.lon).subscribe(
-          (weatherData:any) => {
-            this.weather = weatherData;
-            console.log('Données météo récupérées :', this.weather);
-          },
-          (error) => {
-            console.error('Erreur lors de la récupération de la météo :', error);
-          }
-        );
-      } else {
-        console.log('Aucune donnée trouvée.');
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.city = params['name'];
+      
+      this.route.queryParams.subscribe(queryParams => {
+        this.lat = +queryParams['lat'];
+        this.lon = +queryParams['lon'];
+        this.country = queryParams['country'] || '';
+        
+        if (this.lat && this.lon) {
+          this.loadData();
+        } else {
+          this.error = 'Coordonnées manquantes';
+          this.isLoading = false;
+        }
+      });
+    });
+  }
+  
+  loadData() {
+    this.isLoading = true;
+    this.error = '';
+    
+    // Utiliser forkJoin pour faire les deux appels API en parallèle
+    forkJoin({
+      weather: this.weatherService.getWeather(this.lat, this.lon).pipe(
+        catchError(err => {
+          console.error('Erreur météo:', err);
+          return of(null);
+        })
+      ),
+      airQuality: this.airQualityService.getAirQuality(this.lat, this.lon).pipe(
+        catchError(err => {
+          console.error('Erreur qualité air:', err);
+          return of(null);
+        })
+      )
+    }).subscribe({
+      next: (results) => {
+        this.weather = results.weather;
+        this.airQuality = results.airQuality;
+        this.isLoading = false;
+        
+        if (!this.weather && !this.airQuality) {
+          this.error = 'Impossible de récupérer les données pour cette localisation';
+        }
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des données:', err);
+        this.error = 'Une erreur est survenue lors du chargement des données';
+        this.isLoading = false;
       }
-    },
-    (error) => {
-      console.error('Erreur lors de la récupération des coordonnées :', error);
-    }
-  );
-}
+    });
+  }
+  
+  getAqiLabel(aqi: number) {
+    const item = this.aqiLabels.find(item => item.value === aqi);
+    return item ? item.label : 'Inconnue';
+  }
+  
+  getAqiColor(aqi: number) {
+    const item = this.aqiLabels.find(item => item.value === aqi);
+    return item ? item.color : 'secondary';
+  }
+  
+  retourRecherche() {
+    this.router.navigate(['/']);
+  }
 }

@@ -16,7 +16,8 @@ import { Router } from '@angular/router';
 export class CitySearchComponent {
   query = '';
   cities: any[] = [];
-    private searchTerms = new Subject<string>();
+  private searchTerms = new Subject<string>();
+  isLoading = false;
   
   constructor(
     private citySearchService: CitysearchService,
@@ -29,11 +30,36 @@ export class CitySearchComponent {
 
   ngOnInit(): void {
     this.searchTerms.pipe(
-      debounceTime(300), // Attendre 300ms après la dernière saisie
-      distinctUntilChanged(), // Ignorer si même requête répétée
-      switchMap((term: string) => this.citySearchService.searchCity(term))
-    ).subscribe(cities => this.cities = cities);
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((term: string) => {
+        this.isLoading = true;
+        return this.citySearchService.searchCity(term);
+      })
+    ).subscribe({
+      next: cities => {
+        this.cities = cities;
+        this.isLoading = false;
+      },
+      error: err => {
+        console.error('Erreur lors de la recherche', err);
+        this.isLoading = false;
+      }
+    });
   }
+  
+  selectCity(city: any): void {
+    // On navigue vers la page de détail avec les coordonnées en paramètres
+    this.router.navigate(['/city', city.name], { 
+      queryParams: { 
+        lat: city.lat, 
+        lon: city.lon,
+        country: city.country 
+      } 
+    });
+    console.log('Ville sélectionnée :', city);
+  }
+
 
   trackByName(index: number, city: any): string {
     return city.name;
@@ -42,9 +68,6 @@ export class CitySearchComponent {
     return city.name + city.lat + city.lon;
   }
 
-  selectCity(city: any): void {
-    this.router.navigate(['/city', city.name], { queryParams: { lat: city.lat, lon: city.lon } });
-    console.log('Ville sélectionnée :', city);
-  }
+  
   
 }
