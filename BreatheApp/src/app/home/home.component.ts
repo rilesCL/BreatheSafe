@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CitySearchComponent } from '../city-search/city-search.component';
 import { AirQualityDisplayComponent } from '../air-quality-display/air-quality-display.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,8 @@ import { AirQualityDisplayComponent } from '../air-quality-display/air-quality-d
   imports: [
     RouterOutlet,
     CitySearchComponent,
-    AirQualityDisplayComponent
+    AirQualityDisplayComponent,
+    CommonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

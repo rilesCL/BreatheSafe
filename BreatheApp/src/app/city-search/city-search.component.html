@@ -7,11 +7,11 @@
       [(ngModel)]="query"
       (input)="search(query)"
       placeholder="Entrez le nom d'une ville..."
-      class="flex-grow px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      class="flex-grow px-4 py-3 border rounded-l-lg shadow-sm focus:ring focus:ring-blue-400 focus:outline-none"
     />
     <button 
       [disabled]="!query" 
-      class="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
+      class="px-6 py-3 bg-blue-600 text-white rounded-r-lg shadow hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed transition-all duration-200"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -22,37 +22,39 @@
   
   @if (isLoading) {
     <div class="flex justify-center my-4">
-      <div class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+      <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
     </div>
   }
   
   @if (cities && cities.length > 0) {
-    <ul class="mt-4 rounded-lg overflow-hidden border border-gray-200 divide-y divide-gray-200">
-      @for (city of cities; track (city.name + city.lat + city.lon)) {
-        <li class="bg-white hover:bg-gray-50 transition-colors">
-          <a 
-            href="#" 
-            (click)="selectCity(city); $event.preventDefault()" 
-            class="block px-4 py-3 text-gray-700"
-          >
-            <div class="flex justify-between items-center">
-              <div>
-                <span class="font-semibold">{{ city.name }}</span>, 
-                <span>{{ city.country }}</span>
+    <div class="mt-4">
+      <ul class="bg-white rounded-lg shadow-md overflow-hidden divide-y divide-gray-100">
+        @for (city of cities; track city.name + city.lat + city.lon) {
+          <li class="transition-colors duration-200 hover:bg-blue-50">
+            <a 
+              href="#" 
+              (click)="selectCity(city); $event.preventDefault()" 
+              class="block px-4 py-3 text-gray-700 hover:text-blue-700"
+            >
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="font-semibold">{{ city.name }}</span>, 
+                  <span>{{ city.country }}</span>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
               </div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-            <div class="text-sm text-gray-500 mt-1">
-              Lat: {{ city.lat.toFixed(2) }}, Lon: {{ city.lon.toFixed(2) }}
-            </div>
-          </a>
-        </li>
-      }
-    </ul>
+              <div class="text-sm text-gray-500 mt-1">
+                Lat: {{ city.lat.toFixed(2) }}, Lon: {{ city.lon.toFixed(2) }}
+              </div>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
   } @else if (query && !isLoading) {
-    <div class="mt-4 bg-blue-50 text-blue-700 px-4 py-3 rounded-lg">
+    <div class="mt-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 rounded-r-lg">
       Aucune ville trouvée pour "{{ query }}"
     </div>
   }

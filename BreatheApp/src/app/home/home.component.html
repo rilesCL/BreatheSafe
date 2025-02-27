@@ -1,12 +1,17 @@
 <!-- src/app/home/home.component.html -->
-<div class="min-h-screen bg-gradient-to-b from-blue-50 to-sky-100 py-8">
-  <div class="container mx-auto px-4">
+<div class="min-h-screen bg-cover bg-center relative" style="background-image: url('https://i.imgur.com/v8oRqGD.jpg');">
+  <!-- Overlay semi-transparent pour améliorer la lisibilité du contenu -->
+  <div class="absolute inset-0 bg-white bg-opacity-60"></div>
+  
+  <!-- Contenu principal -->
+  <div class="container mx-auto px-4 py-12 relative z-10 flex flex-col items-center">
     <div class="text-center mb-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-blue-700 mb-3">BreatheSafe</h1>
-      <p class="text-lg text-blue-600 max-w-xl mx-auto">Consultez la qualité de l'air et la météo de n'importe quelle ville dans le monde</p>
+      <h1 class="text-4xl md:text-5xl font-bold text-blue-700 mb-2">BreatheSafe</h1>
+      <p class="text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">Consultez la qualité de l'air et la météo de n'importe quelle ville dans le monde</p>
     </div>
     
-    <div class="max-w-2xl mx-auto">
+    <!-- Bloc de recherche de ville -->
+    <div class="max-w-xl w-full mx-auto mb-12">
       <div class="bg-white rounded-xl shadow-lg overflow-hidden">
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-4">
           <h2 class="text-xl font-semibold text-white">Recherchez une ville</h2>
@@ -16,71 +21,84 @@
           <app-city-search></app-city-search>
         </div>
       </div>
-      
-      <!-- Fonctionnalités clés -->
-      <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow duration-300">
-          <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mb-4 mx-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    </div>
+    
+    <!-- Fonctionnalités en 3 cartes -->
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white bg-opacity-90 rounded-xl shadow-lg p-6 hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h3 class="text-lg font-semibold text-center text-gray-800 mb-2">Données mondiales</h3>
-          <p class="text-gray-600 text-center">Accédez aux données de qualité de l'air pour des milliers de villes dans le monde entier.</p>
-        </div>
-        
-        <div class="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow duration-300">
-          <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mb-4 mx-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-center text-gray-800 mb-2">Temps réel</h3>
-          <p class="text-gray-600 text-center">Visualisez les données météorologiques et de qualité de l'air en temps réel.</p>
-        </div>
-        
-        <div class="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow duration-300">
-          <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center mb-4 mx-auto">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <h3 class="text-lg font-semibold text-center text-gray-800 mb-2">Fiabilité</h3>
-          <p class="text-gray-600 text-center">Données précises issues de sources fiables pour une information de qualité.</p>
+          <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-2">Données mondiales</h3>
+          <p class="text-gray-700 text-center">Accédez aux données de qualité de l'air pour des milliers de villes dans le monde entier.</p>
         </div>
       </div>
       
-      <!-- Section informative sur la qualité de l'air -->
-      <div class="mt-10 bg-white rounded-xl shadow-lg p-6">
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">Comprendre l'indice de qualité de l'air</h2>
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-2 mb-4">
-          <div class="bg-green-100 p-3 rounded-lg text-center">
-            <div class="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-2">1</div>
-            <h3 class="font-medium text-green-800">Excellent</h3>
+      <div class="bg-white bg-opacity-90 rounded-xl shadow-lg p-6 hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
           </div>
-          <div class="bg-green-50 p-3 rounded-lg text-center">
-            <div class="bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-2">2</div>
-            <h3 class="font-medium text-yellow-800">Bon</h3>
-          </div>
-          <div class="bg-yellow-50 p-3 rounded-lg text-center">
-            <div class="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-2">3</div>
-            <h3 class="font-medium text-orange-800">Modéré</h3>
-          </div>
-          <div class="bg-orange-50 p-3 rounded-lg text-center">
-            <div class="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-2">4</div>
-            <h3 class="font-medium text-red-800">Mauvais</h3>
-          </div>
-          <div class="bg-red-50 p-3 rounded-lg text-center">
-            <div class="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-2">5</div>
-            <h3 class="font-medium text-purple-800">Très mauvais</h3>
-          </div>
+          <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-2">Temps réel</h3>
+          <p class="text-gray-700 text-center">Visualisez les données météorologiques et de qualité de l'air en temps réel.</p>
         </div>
-        <p class="text-gray-600 text-sm">L'indice de qualité de l'air (IQA) est une mesure qui indique le niveau de pollution de l'air. Plus l'indice est élevé, plus la pollution est importante et plus les risques pour la santé augmentent.</p>
+      </div>
+      
+      <div class="bg-white bg-opacity-90 rounded-xl shadow-lg p-6 hover:shadow-2xl transform hover:scale-105 transition-all duration-300 ease-in-out">
+        <div class="flex flex-col items-center">
+          <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-2">Fiabilité</h3>
+          <p class="text-gray-700 text-center">Données précises issues de sources fiables pour une information de qualité.</p>
+        </div>
       </div>
     </div>
     
-    <div class="mt-8 text-center text-blue-600 text-sm">
-      Powered by OpenWeatherMap API © 2025 BreatheSafe
+    <!-- Guide indice qualité de l'air avec fond semi-transparent -->
+    <div class="max-w-3xl mx-auto bg-white bg-opacity-90 rounded-xl shadow-lg p-8 mb-10">
+      <h3 class="text-xl md:text-2xl font-semibold text-gray-800 mb-5 text-center">Comprendre l'indice de qualité de l'air</h3>
+      
+      <div class="flex flex-wrap justify-center gap-4 mb-6">
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-green-500 text-white flex items-center justify-center text-lg font-bold mb-2">1</div>
+          <p class="text-green-800 font-medium">Excellent</p>
+        </div>
+        
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-yellow-500 text-white flex items-center justify-center text-lg font-bold mb-2">2</div>
+          <p class="text-yellow-800 font-medium">Bon</p>
+        </div>
+        
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-orange-500 text-white flex items-center justify-center text-lg font-bold mb-2">3</div>
+          <p class="text-orange-800 font-medium">Modéré</p>
+        </div>
+        
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-red-500 text-white flex items-center justify-center text-lg font-bold mb-2">4</div>
+          <p class="text-red-800 font-medium">Mauvais</p>
+        </div>
+        
+        <div class="flex flex-col items-center">
+          <div class="w-14 h-14 rounded-full bg-purple-600 text-white flex items-center justify-center text-lg font-bold mb-2">5</div>
+          <p class="text-purple-800 font-medium">Très mauvais</p>
+        </div>
+      </div>
+      
+      <p class="text-gray-700 text-center">L'indice de qualité de l'air (IQA) est une mesure qui indique le niveau de pollution de l'air. Plus l'indice est élevé, plus la pollution est importante et plus les risques pour la santé augmentent.</p>
     </div>
+    
+    <!-- Pied de page -->
+    <footer class="border-t mt-10 py-6 text-center text-gray-600 text-sm w-full max-w-5xl">
+      Powered by OpenWeatherMap API © 2025 BreatheSafe
+    </footer>
   </div>
 </div>
