@@ -23,6 +23,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './air-quality-display.component.css'
 })
 export class AirQualityDisplayComponent {
+  name: string = '';
   city: string = '';
   country: string = '';
   lat: number = 0;
@@ -50,9 +51,9 @@ export class AirQualityDisplayComponent {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.city = params['name'];
       
       this.route.queryParams.subscribe(queryParams => {
+        this.city = queryParams['city'] || '';
         this.lat = +queryParams['lat'];
         this.lon = +queryParams['lon'];
         this.country = queryParams['country'] || '';
@@ -103,14 +104,26 @@ export class AirQualityDisplayComponent {
     });
   }
   
-  getAqiLabel(aqi: number) {
-    const item = this.aqiLabels.find(item => item.value === aqi);
-    return item ? item.label : 'Inconnue';
+  getAqiColor(aqi: number): string {
+    switch(aqi) {
+      case 1: return 'green-aqi';
+      case 2: return 'yellow-aqi';
+      case 3: return 'orange-aqi';
+      case 4: return 'red-aqi';
+      case 5: return 'purple-aqi';
+      default: return 'gray-500';
+    }
   }
   
-  getAqiColor(aqi: number) {
-    const item = this.aqiLabels.find(item => item.value === aqi);
-    return item ? item.color : 'secondary';
+  getAqiLabel(aqi: number): string {
+    switch(aqi) {
+      case 1: return 'Excellent';
+      case 2: return 'Bon';
+      case 3: return 'Modéré';
+      case 4: return 'Mauvais';
+      case 5: return 'Très mauvais';
+      default: return 'Inconnu';
+    }
   }
   
   retourRecherche() {

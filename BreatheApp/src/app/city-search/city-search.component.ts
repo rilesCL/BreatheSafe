@@ -50,8 +50,9 @@ export class CitySearchComponent {
   
   selectCity(city: any): void {
     // On navigue vers la page de détail avec les coordonnées en paramètres
-    this.router.navigate(['/city', city.name], { 
+    this.router.navigate(['/city'], { 
       queryParams: { 
+        city: city.name,
         lat: city.lat, 
         lon: city.lon,
         country: city.country 
@@ -67,7 +68,4 @@ export class CitySearchComponent {
   trackByCity(index: number, city: any): string {
     return city.name + city.lat + city.lon;
   }
-
-  
-  
 }

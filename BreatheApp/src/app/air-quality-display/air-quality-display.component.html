@@ -1,135 +1,134 @@
 <!-- src/app/air-quality-display/air-quality-display.component.html -->
-<div class="container py-5">
-  <div class="mb-4">
-    <a class="btn btn-outline-primary btn-sm" (click)="retourRecherche()">
-      <i class="bi bi-arrow-left"></i> Retour à la recherche
-    </a>
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  <div class="mb-6">
+    <button (click)="retourRecherche()" class="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 font-medium bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour à la recherche
+    </button>
   </div>
   
-  <h1 class="mb-4">{{ city }}<span *ngIf="country">, {{ country }}</span></h1>
+  <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+    {{ city }}
+    @if (country) {
+      <span class="text-gray-700">, {{ country }}</span>
+    }
+  </h1>
   
   @if (isLoading) {
-    <div class="d-flex justify-content-center my-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Chargement des données...</span>
-      </div>
+    <!-- Loading indicator -->
+    <div class="flex justify-center my-12">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
     </div>
   }
   
   @if (error) {
-    <div class="alert alert-danger">
-      {{ error }}
+    <!-- Error message -->
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded mb-6">
+      <p class="font-medium">{{ error }}</p>
     </div>
   }
   
   @if (!isLoading && !error) {
-    <div class="row">
-      <!-- Carte météo -->
+    <!-- Content when data is loaded -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
       @if (weather) {
-        <div class="col-md-6 mb-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-header bg-primary text-white">
-              <h5 class="m-0">Météo actuelle</h5>
-            </div>
-            <div class="card-body">
-              <div class="d-flex align-items-center mb-3">
-                <img 
-                  *ngIf="weather.weather && weather.weather[0]"
-                  src="https://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" 
-                  alt="{{ weather.weather[0].description }}"
-                  class="me-3"
-                />
-                <div>
-                  <h2 class="mb-0">{{ weather.main.temp.toFixed(1) }}°C</h2>
-                  <p class="text-capitalize">{{ weather.weather[0].description }}</p>
+        <!-- Weather Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-6 py-4">
+            <h2 class="text-xl font-semibold">Météo actuelle</h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="flex items-center mb-6">
+              @if (weather.weather && weather.weather[0]) {
+                <div class="bg-blue-50 rounded-full p-2 mr-4">
+                  <img 
+                    src="https://openweathermap.org/img/wn/{{ weather.weather[0].icon }}@2x.png" 
+                    alt="{{ weather.weather[0].description }}"
+                    class="w-16 h-16"
+                  />
                 </div>
+              }
+              <div>
+                <h3 class="text-3xl font-bold text-gray-800">{{ weather.main.temp.toFixed(1) }}°C</h3>
+                <p class="text-gray-600 capitalize">{{ weather.weather[0].description }}</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">Ressenti</p>
+                <p class="text-lg font-semibold">{{ weather.main.feels_like.toFixed(1) }}°C</p>
               </div>
               
-              <div class="row weather-details">
-                <div class="col-6 mb-3">
-                  <div class="detail-item">
-                    <span class="detail-label">Ressenti</span>
-                    <span class="detail-value">{{ weather.main.feels_like.toFixed(1) }}°C</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-3">
-                  <div class="detail-item">
-                    <span class="detail-label">Humidité</span>
-                    <span class="detail-value">{{ weather.main.humidity }}%</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-3">
-                  <div class="detail-item">
-                    <span class="detail-label">Vent</span>
-                    <span class="detail-value">{{ (weather.wind.speed * 3.6).toFixed(1) }} km/h</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-3">
-                  <div class="detail-item">
-                    <span class="detail-label">Pression</span>
-                    <span class="detail-value">{{ weather.main.pressure }} hPa</span>
-                  </div>
-                </div>
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">Humidité</p>
+                <p class="text-lg font-semibold">{{ weather.main.humidity }}%</p>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">Vent</p>
+                <p class="text-lg font-semibold">{{ (weather.wind.speed * 3.6).toFixed(1) }} km/h</p>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">Pression</p>
+                <p class="text-lg font-semibold">{{ weather.main.pressure }} hPa</p>
               </div>
             </div>
           </div>
         </div>
       }
       
-      <!-- Carte qualité de l'air -->
       @if (airQuality) {
-        <div class="col-md-6 mb-4">
-          <div class="card shadow-sm h-100">
-            <div class="card-header bg-primary text-white">
-              <h5 class="m-0">Qualité de l'air</h5>
+        <!-- Air Quality Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
+          <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-6 py-4">
+            <h2 class="text-xl font-semibold">Qualité de l'air</h2>
+          </div>
+          
+          <div class="p-6">
+            <div class="flex flex-col items-center mb-6">
+              <div class="rounded-full w-20 h-20 flex items-center justify-center text-2xl font-bold text-white bg-{{ getAqiColor(airQuality.main.aqi) }} shadow-md">
+                {{ airQuality.main.aqi }}
+              </div>
+              <h3 class="text-2xl font-bold mt-3 text-gray-800">{{ getAqiLabel(airQuality.main.aqi) }}</h3>
+              <p class="text-gray-500 mt-1">Indice de qualité de l'air</p>
             </div>
-            <div class="card-body">
-              <div class="text-center mb-4">
-                <div class="aqi-badge bg-{{ getAqiColor(airQuality.main.aqi) }}">
-                  {{ airQuality.main.aqi }}
-                </div>
-                <h3 class="mt-2">{{ getAqiLabel(airQuality.main.aqi) }}</h3>
-                <p class="text-muted">Indice de qualité de l'air</p>
+            
+            <h4 class="text-lg font-medium text-gray-700 mb-3">Polluants (µg/m³)</h4>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">PM2.5</p>
+                <p class="text-lg font-semibold">{{ airQuality.components.pm2_5.toFixed(1) }}</p>
               </div>
               
-              <h6 class="mb-3">Polluants (µg/m³)</h6>
-              <div class="row">
-                <div class="col-6 mb-2">
-                  <div class="detail-item">
-                    <span class="detail-label">PM2.5</span>
-                    <span class="detail-value">{{ airQuality.components.pm2_5.toFixed(1) }}</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-2">
-                  <div class="detail-item">
-                    <span class="detail-label">PM10</span>
-                    <span class="detail-value">{{ airQuality.components.pm10.toFixed(1) }}</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-2">
-                  <div class="detail-item">
-                    <span class="detail-label">NO₂</span>
-                    <span class="detail-value">{{ airQuality.components.no2.toFixed(1) }}</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-2">
-                  <div class="detail-item">
-                    <span class="detail-label">O₃</span>
-                    <span class="detail-value">{{ airQuality.components.o3.toFixed(1) }}</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-2">
-                  <div class="detail-item">
-                    <span class="detail-label">SO₂</span>
-                    <span class="detail-value">{{ airQuality.components.so2.toFixed(1) }}</span>
-                  </div>
-                </div>
-                <div class="col-6 mb-2">
-                  <div class="detail-item">
-                    <span class="detail-label">CO</span>
-                    <span class="detail-value">{{ airQuality.components.co.toFixed(1) }}</span>
-                  </div>
-                </div>
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">PM10</p>
+                <p class="text-lg font-semibold">{{ airQuality.components.pm10.toFixed(1) }}</p>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">NO₂</p>
+                <p class="text-lg font-semibold">{{ airQuality.components.no2.toFixed(1) }}</p>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">O₃</p>
+                <p class="text-lg font-semibold">{{ airQuality.components.o3.toFixed(1) }}</p>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">SO₂</p>
+                <p class="text-lg font-semibold">{{ airQuality.components.so2.toFixed(1) }}</p>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-3">
+                <p class="text-sm text-blue-800 font-medium mb-1">CO</p>
+                <p class="text-lg font-semibold">{{ airQuality.components.co.toFixed(1) }}</p>
               </div>
             </div>
           </div>
