@@ -5,10 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:BreatheApp": "node dist/breathe-app/server/server.mjs",
-    "build:prod": "ng build --configuration production",
     "postinstall": "npm run install:angular-cli",
     "install:angular-cli": "npm install --no-save @angular/cli"
   },
